@@ -162,6 +162,12 @@ button,input,select,textarea{font:inherit}
 .footer a:hover{color:var(--white)}
 .footer ul li{margin-bottom:8px}
 .footer-bottom{border-top:1px solid var(--green-700);padding-top:20px;text-align:center;font-size:.85rem;color:var(--green-500)}
+.footer-ig{display:inline-flex;align-items:center;gap:6px;color:var(--green-300);margin-bottom:10px;font-size:.9rem;transition:.2s}
+.footer-ig:hover{color:var(--white)}
+.footer-ig svg{flex-shrink:0}
+.sub-active-badge{background:var(--green-100);color:var(--green-900);padding:6px 12px;border-radius:var(--radius);font-size:.85rem;margin-bottom:8px;font-weight:600}
+.unsub-btn{color:#c0392b !important;border-color:#c0392b !important}
+.unsub-btn:hover{background:#c0392b !important;color:var(--white) !important}
 
 /* --- Breadcrumb --- */
 .breadcrumb{padding:16px 0;font-size:.9rem;color:var(--gray-500)}

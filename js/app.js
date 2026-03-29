@@ -119,6 +119,12 @@ const Auth = {
     if (user.password !== oldPw) return { ok: false, msg: 'Current password is incorrect.' };
     this.updateUser({ password: newPw });
     return { ok: true };
+  },
+
+  unsubscribe(subId) {
+    const user = this.currentUser();
+    if (!user) return;
+    this.updateUser({ subscriptions: (user.subscriptions || []).filter(s => s.id !== subId) });
   }
 };
 
@@ -224,6 +230,7 @@ const Store = {
     const cart = this.getCart();
     const item = cart.find(i => i.id === productId);
     if (item) item.qty = qty;
+    else cart.push({ id: productId, qty: qty });
     this.saveCart(cart);
     this.updateCartBadge();
     this.refreshCardButtons();
@@ -264,10 +271,12 @@ const Store = {
       const qty = this.cartItemQty(pid);
       const btnArea = actionsDiv.querySelector('.atc-area');
       if (!btnArea) return;
+      var isNumPid = typeof pid === 'number';
+      var pidArg = isNumPid ? pid : "'" + pid + "'";
       if (qty > 0) {
-        btnArea.innerHTML = '<div class="inline-qty"><button class="iq-btn" onclick="event.stopPropagation();Store.setQty(\'' + pid + '\',' + (qty - 1) + ')">&#8722;</button><span class="iq-val">' + qty + '</span><button class="iq-btn" onclick="event.stopPropagation();Store.setQty(\'' + pid + '\',' + (qty + 1) + ')">+</button></div>';
+        btnArea.innerHTML = '<div class="inline-qty"><button class="iq-btn" onclick="event.stopPropagation();Store.setQty(' + pidArg + ',' + (qty - 1) + ')">&#8722;</button><span class="iq-val">' + qty + '</span><button class="iq-btn" onclick="event.stopPropagation();Store.setQty(' + pidArg + ',' + (qty + 1) + ')">+</button></div>';
       } else {
-        btnArea.innerHTML = '<button class="btn btn-primary" onclick="event.stopPropagation();Store.addToCart(\'' + pid + '\')">Add to Cart</button>';
+        btnArea.innerHTML = '<button class="btn btn-primary" onclick="event.stopPropagation();Store.addToCart(' + pidArg + ')">Add to Cart</button>';
       }
     });
   },
@@ -627,7 +636,11 @@ function initProductDetail() {
   };
   document.getElementById('qtyMinus').onclick = function() { if (qty > 1) { qty--; updateUI(); } };
   document.getElementById('qtyPlus').onclick = function() { qty++; updateUI(); };
-  document.getElementById('addToCartBtn').onclick = function() { Store.addToCart(p.id, qty); };
+  document.getElementById('addToCartBtn').onclick = function() {
+    if (!Auth.isLoggedIn()) { window.location = 'account.html?m=login&next=' + encodeURIComponent(window.location.href); return; }
+    Store.setQty(p.id, qty);
+    showToast('Added to cart!');
+  };
 
   // Render "You May Also Need" (upsell) for regular products
   if (isNum) {
@@ -663,15 +676,14 @@ function initCartPage() {
     var walletBal = Auth.isLoggedIn() ? (Auth.currentUser().wallet || 0) : 0;
 
     container.innerHTML =
-      '<table class="cart-table"><thead><tr><th>Product</th><th>Price</th><th>Quantity</th><th>Total</th><th></th></tr></thead>' +
+      '<table class="cart-table"><thead><tr><th>Product</th><th>Price</th><th>Quantity</th><th>Total</th></tr></thead>' +
       '<tbody>' + cart.map(function(item) {
         var p = Store.getProduct(item.id);
         if (!p) return '';
         return '<tr><td><div class="cart-product"><div class="thumb">' + p.emoji + '</div><div class="name">' + p.name + (p.cat === 'bundle' ? ' <small style="color:var(--green-500)">[Bundle]</small>' : '') + '</div></div></td>' +
           '<td>' + fmt(p.price) + '</td>' +
           '<td><div class="cart-qty"><button onclick="changeQty(\'' + item.id + '\',-1)">\u2212</button><span>' + item.qty + '</span><button onclick="changeQty(\'' + item.id + '\',1)">+</button></div></td>' +
-          '<td><strong>' + fmt(p.price * item.qty) + '</strong></td>' +
-          '<td><span class="cart-remove" onclick="removeItem(\'' + item.id + '\')">\u2715</span></td></tr>';
+          '<td><strong>' + fmt(p.price * item.qty) + '</strong></td></tr>';
       }).join('') + '</tbody></table>' +
       '<div class="cart-summary"><div class="cart-summary-box">' +
         '<h3>Order Summary</h3>' +
@@ -695,11 +707,14 @@ function initCartPage() {
     var numId = /^\d+$/.test(id) ? parseInt(id, 10) : id;
     var c = Store.getCart();
     var i = c.find(function(x) { return x.id === numId; });
-    if (i) { i.qty = Math.max(1, i.qty + d); Store.saveCart(c); Store.updateCartBadge(); renderCart(); }
-  };
-  window.removeItem = function(id) {
-    var numId = /^\d+$/.test(id) ? parseInt(id, 10) : id;
-    Store.removeFromCart(numId); renderCart();
+    if (i) {
+      var newQty = i.qty + d;
+      if (newQty <= 0) { Store.removeFromCart(numId); renderCart(); return; }
+      i.qty = newQty;
+      Store.saveCart(c);
+      Store.updateCartBadge();
+      renderCart();
+    }
   };
 }
 
@@ -945,8 +960,14 @@ function renderAccSubscriptions(el, user) {
   var subs = user.subscriptions || [];
   el.innerHTML = '<h2>My Subscriptions</h2>' +
     (!subs.length ? '<p>No active subscriptions. <a href="subscriptions.html">Set up recurring deliveries!</a></p>' :
-    subs.map(function(s) { return '<div class="order-card"><div class="order-head"><span><strong>' + s.name + '</strong></span><span class="order-status">' + s.frequency + '</span></div><div class="order-items">Days: ' + s.days.join(', ') + ' \u00B7 Qty: ' + s.qty + '</div><div class="order-total-line">' + fmt(s.price) + ' per delivery</div></div>'; }).join('')) +
+    subs.map(function(s) { return '<div class="order-card"><div class="order-head"><span><strong>' + s.name + '</strong></span><span class="order-status">' + s.frequency + '</span></div><div class="order-items">Days: ' + s.days.join(', ') + ' \u00B7 Qty: ' + s.qty + '</div><div class="order-total-line" style="display:flex;justify-content:space-between;align-items:center"><span>' + fmt(s.price) + ' per delivery</span><button class="btn btn-outline unsub-btn" style="padding:4px 14px;font-size:.85rem" onclick="accUnsubscribe(\'' + s.id + '\',\'' + s.name + '\')">Unsubscribe</button></div></div>'; }).join('')) +
     '<a href="subscriptions.html" class="btn btn-primary" style="margin-top:16px">Manage Subscriptions</a>';
+
+  window.accUnsubscribe = function(id, name) {
+    Auth.unsubscribe(id);
+    showToast('Unsubscribed from ' + name);
+    renderDashboard(document.getElementById('accountPage'), 'subscriptions');
+  };
 }
 
 function renderAccDeliveryPrefs(el, user) {
@@ -1008,25 +1029,34 @@ function initSubscriptionsPage() {
   var daily = subsProducts.filter(function(p) { return !p.seasonal; });
   var seasonal = subsProducts.filter(function(p) { return p.seasonal; });
   var days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var userSubs = (Auth.currentUser() || {}).subscriptions || [];
 
   pg.innerHTML =
     '<h2 class="section-title">Recurring Deliveries</h2>' +
     '<p class="section-subtitle">Get farm-fresh essentials delivered to your door \u2014 daily, weekly, or on your chosen schedule.</p>' +
     '<h3 style="color:var(--green-900);margin-bottom:16px">\uD83E\uDD5B Daily Essentials</h3>' +
     '<div class="subs-grid">' + daily.map(function(p) {
-      return '<div class="subs-card" id="sub_' + p.id + '"><div class="subs-emoji">' + p.emoji + '</div><h4>' + p.name + '</h4><p class="price">' + fmt(p.price) + ' <small>/ ' + p.unit + '</small></p>' +
-        '<div class="form-group"><label>Quantity</label><input type="number" class="sub-qty" data-id="' + p.id + '" min="1" value="1" style="width:70px"></div>' +
-        '<div class="form-group"><label>Frequency</label><select class="sub-freq" data-id="' + p.id + '"><option value="daily">Every day</option><option value="alternate">Alternate days</option><option value="weekly">Once a week</option><option value="custom">Custom days</option></select></div>' +
-        '<div class="sub-days" data-id="' + p.id + '" style="display:none">' + days.map(function(d) { return '<label class="day-check"><input type="checkbox" value="' + d + '"> ' + d + '</label>'; }).join('') + '</div>' +
-        '<button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="subscribeTo(\'' + p.id + '\',\'' + p.name + '\',' + p.price + ')">Subscribe</button></div>';
+      var isSub = userSubs.find(function(s) { return s.id === p.id; });
+      return '<div class="subs-card' + (isSub ? ' subscribed' : '') + '" id="sub_' + p.id + '"><div class="subs-emoji">' + p.emoji + '</div><h4>' + p.name + '</h4><p class="price">' + fmt(p.price) + ' <small>/ ' + p.unit + '</small></p>' +
+        (isSub ? '<div class="sub-active-badge">\u2705 Subscribed \u2014 ' + isSub.frequency + '</div>' : '') +
+        '<div class="form-group"><label>Quantity</label><input type="number" class="sub-qty" data-id="' + p.id + '" min="1" value="' + (isSub ? isSub.qty : 1) + '" style="width:70px"></div>' +
+        '<div class="form-group"><label>Frequency</label><select class="sub-freq" data-id="' + p.id + '"><option value="daily"' + (isSub && isSub.frequency === 'daily' ? ' selected' : '') + '>Every day</option><option value="alternate"' + (isSub && isSub.frequency === 'alternate' ? ' selected' : '') + '>Alternate days</option><option value="weekly"' + (isSub && isSub.frequency === 'weekly' ? ' selected' : '') + '>Once a week</option><option value="custom"' + (isSub && isSub.frequency === 'custom' ? ' selected' : '') + '>Custom days</option></select></div>' +
+        '<div class="sub-days" data-id="' + p.id + '" style="' + (isSub && isSub.frequency === 'custom' ? 'display:flex' : 'display:none') + '">' + days.map(function(d) { return '<label class="day-check"><input type="checkbox" value="' + d + '"' + (isSub && isSub.days && isSub.days.includes(d) ? ' checked' : '') + '> ' + d + '</label>'; }).join('') + '</div>' +
+        '<button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="subscribeTo(\'' + p.id + '\',\'' + p.name + '\',' + p.price + ')">' + (isSub ? 'Update' : 'Subscribe') + '</button>' +
+        (isSub ? '<button class="btn btn-outline unsub-btn" style="width:100%;margin-top:6px" onclick="unsubscribeFrom(\'' + p.id + '\',\'' + p.name + '\')">Unsubscribe</button>' : '') +
+        '</div>';
     }).join('') + '</div>' +
     '<h3 style="color:var(--green-900);margin:40px 0 16px">\uD83E\uDD6D Seasonal Specials</h3>' +
     '<p style="color:var(--gray-500);margin-bottom:20px">Order larger quantities of seasonal fruits \u2014 delivered during their harvest window.</p>' +
     '<div class="subs-grid">' + seasonal.map(function(p) {
-      return '<div class="subs-card seasonal" id="sub_' + p.id + '"><div class="subs-emoji">' + p.emoji + '</div><span class="tag">' + p.season + '</span><h4>' + p.name + '</h4><p class="price">' + fmt(p.price) + ' <small>/ ' + p.unit + '</small></p>' +
-        '<div class="form-group"><label>Quantity per delivery</label><input type="number" class="sub-qty" data-id="' + p.id + '" min="1" value="2" style="width:70px"></div>' +
-        '<div class="form-group"><label>Frequency</label><select class="sub-freq" data-id="' + p.id + '"><option value="weekly">Once a week</option><option value="biweekly">Twice a month</option><option value="monthly">Once a month</option></select></div>' +
-        '<button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="subscribeTo(\'' + p.id + '\',\'' + p.name + '\',' + p.price + ')">Subscribe for Season</button></div>';
+      var isSub = userSubs.find(function(s) { return s.id === p.id; });
+      return '<div class="subs-card seasonal' + (isSub ? ' subscribed' : '') + '" id="sub_' + p.id + '"><div class="subs-emoji">' + p.emoji + '</div><span class="tag">' + p.season + '</span><h4>' + p.name + '</h4><p class="price">' + fmt(p.price) + ' <small>/ ' + p.unit + '</small></p>' +
+        (isSub ? '<div class="sub-active-badge">\u2705 Subscribed \u2014 ' + isSub.frequency + '</div>' : '') +
+        '<div class="form-group"><label>Quantity per delivery</label><input type="number" class="sub-qty" data-id="' + p.id + '" min="1" value="' + (isSub ? isSub.qty : 2) + '" style="width:70px"></div>' +
+        '<div class="form-group"><label>Frequency</label><select class="sub-freq" data-id="' + p.id + '"><option value="weekly"' + (isSub && isSub.frequency === 'weekly' ? ' selected' : '') + '>Once a week</option><option value="biweekly"' + (isSub && isSub.frequency === 'biweekly' ? ' selected' : '') + '>Twice a month</option><option value="monthly"' + (isSub && isSub.frequency === 'monthly' ? ' selected' : '') + '>Once a month</option></select></div>' +
+        '<button class="btn btn-primary" style="width:100%;margin-top:8px" onclick="subscribeTo(\'' + p.id + '\',\'' + p.name + '\',' + p.price + ')">' + (isSub ? 'Update' : 'Subscribe for Season') + '</button>' +
+        (isSub ? '<button class="btn btn-outline unsub-btn" style="width:100%;margin-top:6px" onclick="unsubscribeFrom(\'' + p.id + '\',\'' + p.name + '\')">Unsubscribe</button>' : '') +
+        '</div>';
     }).join('') + '</div>';
 
   document.querySelectorAll('.sub-freq').forEach(function(sel) {
@@ -1056,6 +1086,13 @@ function initSubscriptionsPage() {
     if (existing > -1) subs[existing] = sub; else subs.push(sub);
     Auth.updateUser({ subscriptions: subs });
     showToast('Subscribed to ' + name + '!');
+    initSubscriptionsPage();
+  };
+
+  window.unsubscribeFrom = function(id, name) {
+    Auth.unsubscribe(id);
+    showToast('Unsubscribed from ' + name);
+    initSubscriptionsPage();
   };
 }
 
