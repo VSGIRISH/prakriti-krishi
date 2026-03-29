@@ -1,4 +1,4 @@
-/* ===== Prakriti Krishi — Full App Logic ===== */
+/* ===== Prakriti Krishi Farms — Full App Logic ===== */
 
 /* ============ CURRENCY ============ */
 const CURRENCY = '₹';
@@ -167,39 +167,71 @@ const Store = {
   STORAGE_KEY: 'prakriti_cart',
 
   products: [
-    { id: 1, name: 'Ashwagandha Powder', price: 499, oldPrice: 699, cat: 'herbs', tag: 'Bestseller', emoji: '🌿', desc: 'Organic ashwagandha root powder for stress relief and vitality. Sourced from certified organic farms in Madhya Pradesh.', tags: ['best_seller', 'most_bought'], stock: 50 },
-    { id: 2, name: 'Turmeric Golden Milk', price: 349, oldPrice: null, cat: 'wellness', tag: 'New', emoji: '🥛', desc: 'Premium turmeric latte blend with black pepper for enhanced absorption. A warming, anti-inflammatory drink.', tags: ['new'], stock: 35 },
-    { id: 3, name: 'Neem Face Wash', price: 249, oldPrice: 349, cat: 'skincare', tag: 'Popular', emoji: '🧴', desc: 'Gentle neem and tea tree face wash for clear, blemish-free skin. Suitable for all skin types.', tags: ['best_seller'], stock: 80 },
-    { id: 4, name: 'Brahmi Hair Oil', price: 399, oldPrice: null, cat: 'haircare', tag: 'Organic', emoji: '🫧', desc: 'Cold-pressed brahmi oil blended with coconut and amla for strong, lustrous hair.', tags: ['most_bought'], stock: 25 },
-    { id: 5, name: 'Tulsi Green Tea', price: 199, oldPrice: 299, cat: 'wellness', tag: 'Sale', emoji: '🍵', desc: 'Holy basil and green tea blend. Rich in antioxidants for daily immunity support.', tags: ['best_seller', 'most_bought'], stock: 100 },
-    { id: 6, name: 'Aloe Vera Gel', price: 299, oldPrice: null, cat: 'skincare', tag: 'Pure', emoji: '🪴', desc: '99% pure aloe vera gel for soothing sunburn, moisturising skin, and minor cuts.', tags: [], stock: 60 },
-    { id: 7, name: 'Triphala Capsules', price: 449, oldPrice: 599, cat: 'herbs', tag: 'Ayurvedic', emoji: '💊', desc: 'Traditional triphala blend in vegetarian capsules for digestive health and detoxification.', tags: ['most_bought'], stock: 40 },
-    { id: 8, name: 'Rose Water Toner', price: 229, oldPrice: null, cat: 'skincare', tag: 'Natural', emoji: '🌹', desc: 'Steam-distilled rose water toner to hydrate, tone, and refresh your skin naturally.', tags: ['new'], stock: 55 },
-    { id: 9, name: 'Moringa Leaf Powder', price: 349, oldPrice: 499, cat: 'herbs', tag: 'Superfood', emoji: '🌱', desc: 'Nutrient-dense moringa powder packed with vitamins, minerals, and amino acids.', tags: ['new', 'limited_stock'], stock: 8 },
-    { id: 10, name: 'Coconut Oil (Virgin)', price: 299, oldPrice: null, cat: 'haircare', tag: 'Cold-Pressed', emoji: '🥥', desc: 'Unrefined virgin coconut oil for cooking, hair care, and skin moisturising.', tags: ['best_seller'], stock: 70 },
-    { id: 11, name: 'Saffron Face Cream', price: 599, oldPrice: 849, cat: 'skincare', tag: 'Premium', emoji: '✨', desc: 'Luxurious saffron-infused face cream for radiant, even-toned skin.', tags: ['limited_stock'], stock: 5 },
-    { id: 12, name: 'Chamomile Sleep Tea', price: 219, oldPrice: null, cat: 'wellness', tag: 'Calming', emoji: '🌼', desc: 'Soothing chamomile and lavender blend to promote restful sleep.', tags: [], stock: 45 },
+    /* Beauty */
+    { id: 1, name: 'Neem Face Wash', price: 249, oldPrice: 349, cat: 'beauty', tag: 'Popular', emoji: '🧴', desc: 'Gentle neem and tea tree face wash for clear, blemish-free skin. Suitable for all skin types.', tags: ['best_seller'], stock: 80 },
+    { id: 2, name: 'Rose Water Toner', price: 229, oldPrice: null, cat: 'beauty', tag: 'Natural', emoji: '🌹', desc: 'Steam-distilled rose water toner to hydrate, tone, and refresh your skin naturally.', tags: ['new'], stock: 55 },
+    { id: 3, name: 'Aloe Vera Gel', price: 199, oldPrice: null, cat: 'beauty', tag: 'Pure', emoji: '🪴', desc: '99% pure aloe vera gel for soothing sunburn, moisturising skin, and minor cuts.', tags: [], stock: 60 },
+    { id: 4, name: 'Saffron Face Cream', price: 599, oldPrice: 849, cat: 'beauty', tag: 'Premium', emoji: '✨', desc: 'Luxurious saffron-infused face cream for radiant, even-toned skin.', tags: ['limited_stock'], stock: 5 },
+    /* Fruits */
+    { id: 5, name: 'Farm Fresh Bananas (1 doz)', price: 49, oldPrice: null, cat: 'fruits', tag: 'Daily', emoji: '🍌', desc: 'Organically grown, naturally ripened bananas — perfect for breakfast and smoothies.', tags: ['best_seller', 'most_bought'], stock: 100 },
+    { id: 6, name: 'Seasonal Mangoes (1 kg)', price: 299, oldPrice: 399, cat: 'fruits', tag: 'Seasonal', emoji: '🥭', desc: 'Hand-picked Alphonso and Banganapalli mangoes from Maharashtra and Andhra Pradesh farms.', tags: ['best_seller', 'limited_stock'], stock: 15 },
+    { id: 7, name: 'Fresh Pomegranates (500g)', price: 120, oldPrice: null, cat: 'fruits', tag: 'Organic', emoji: '🫐', desc: 'Juicy organic pomegranates rich in antioxidants. Sourced from Maharashtra farms.', tags: ['new'], stock: 40 },
+    { id: 8, name: 'Guavas (1 kg)', price: 80, oldPrice: null, cat: 'fruits', tag: 'Farm Fresh', emoji: '🍏', desc: 'Sweet and crunchy Lucknow-variety guavas, great for immunity and digestion.', tags: [], stock: 50 },
+    /* Vegetables */
+    { id: 9, name: 'Organic Tomatoes (1 kg)', price: 45, oldPrice: null, cat: 'vegetables', tag: 'Daily', emoji: '🍅', desc: 'Fresh, firm organic tomatoes — perfect for curries, salads, and chutneys.', tags: ['best_seller', 'most_bought'], stock: 120 },
+    { id: 10, name: 'Farm Spinach (500g)', price: 30, oldPrice: null, cat: 'vegetables', tag: 'Leafy', emoji: '🥬', desc: 'Crisp, pesticide-free spinach packed with iron and vitamins. Harvested fresh daily.', tags: ['best_seller'], stock: 80 },
+    { id: 11, name: 'Organic Potatoes (2 kg)', price: 60, oldPrice: null, cat: 'vegetables', tag: 'Staple', emoji: '🥔', desc: 'Versatile, chemical-free potatoes ideal for everyday cooking.', tags: ['most_bought'], stock: 150 },
+    { id: 12, name: 'Green Chillies (250g)', price: 20, oldPrice: null, cat: 'vegetables', tag: 'Spicy', emoji: '🌶️', desc: 'Farm-fresh green chillies to add that perfect kick to your dishes.', tags: [], stock: 200 },
+    /* Grains & Pulses */
+    { id: 13, name: 'Organic Toor Dal (1 kg)', price: 180, oldPrice: 220, cat: 'grains', tag: 'Staple', emoji: '🫘', desc: 'Unpolished organic toor dal for wholesome, nutritious daily meals.', tags: ['best_seller', 'most_bought'], stock: 60 },
+    { id: 14, name: 'Brown Rice (2 kg)', price: 160, oldPrice: null, cat: 'grains', tag: 'Healthy', emoji: '🍚', desc: 'Fibre-rich, unpolished brown rice from organic paddy fields in Telangana.', tags: ['new'], stock: 45 },
+    { id: 15, name: 'Moong Dal (1 kg)', price: 150, oldPrice: null, cat: 'grains', tag: 'Protein', emoji: '🥣', desc: 'Split yellow moong dal — easy to cook, light on digestion, and high in protein.', tags: [], stock: 55 },
+    { id: 16, name: 'Ragi Flour (1 kg)', price: 90, oldPrice: 120, cat: 'grains', tag: 'Millet', emoji: '🌾', desc: 'Stone-ground finger millet flour, perfect for rotis, dosas, and porridge. Rich in calcium.', tags: ['new'], stock: 35 },
+    /* Eco Utensils */
+    { id: 17, name: 'Coconut Shell Bowl', price: 299, oldPrice: null, cat: 'ecoutensils', tag: 'Eco', emoji: '🥥', desc: 'Handcrafted coconut shell bowl — ideal for smoothie bowls, salads, and decor.', tags: ['new'], stock: 30 },
+    { id: 18, name: 'Bamboo Cutlery Set', price: 199, oldPrice: 249, cat: 'ecoutensils', tag: 'Zero-Waste', emoji: '🎋', desc: 'Reusable bamboo spoon, fork, and knife set with a cotton pouch. Perfect for travel.', tags: ['best_seller'], stock: 50 },
+    { id: 19, name: 'Clay Water Pot (Matka)', price: 349, oldPrice: null, cat: 'ecoutensils', tag: 'Traditional', emoji: '🏺', desc: 'Natural clay pot for naturally cool, mineral-rich drinking water the traditional way.', tags: [], stock: 20 },
+    { id: 20, name: 'Brass Diya Set (4 pc)', price: 450, oldPrice: 550, cat: 'ecoutensils', tag: 'Handmade', emoji: '🪔', desc: 'Handcrafted brass oil lamps for puja, festivals, and home decor.', tags: ['limited_stock'], stock: 10 },
+    /* Dairy & Ghee (includes eggs) */
+    { id: 21, name: 'Farm Fresh Eggs (12 pc)', price: 96, oldPrice: null, cat: 'dairy', tag: 'Daily', emoji: '🥚', desc: 'Free-range country eggs from healthy, naturally fed hens. Rich in protein and flavour.', tags: ['best_seller', 'most_bought'], stock: 100 },
+    { id: 22, name: 'Fresh Cow Milk (1 L)', price: 68, oldPrice: null, cat: 'dairy', tag: 'Daily', emoji: '🥛', desc: 'Pure, unprocessed A2 cow milk delivered fresh every morning from local farms.', tags: ['best_seller', 'most_bought'], stock: 80 },
+    { id: 23, name: 'Pure Desi Ghee (500 ml)', price: 450, oldPrice: 520, cat: 'dairy', tag: 'Premium', emoji: '🫙', desc: 'Bilona-method A2 cow ghee — aromatic, golden, and full of nutrition.', tags: ['best_seller'], stock: 30 },
+    { id: 24, name: 'Fresh Paneer (250g)', price: 120, oldPrice: null, cat: 'dairy', tag: 'Fresh', emoji: '🧀', desc: 'Soft, fresh paneer made from farm milk. No preservatives — use within 3 days.', tags: ['new'], stock: 40 },
+    { id: 25, name: 'Organic Curd (500g)', price: 55, oldPrice: null, cat: 'dairy', tag: 'Probiotic', emoji: '🥣', desc: 'Thick, creamy curd set from whole milk. A natural probiotic for gut health.', tags: [], stock: 60 },
+    /* Oils */
+    { id: 26, name: 'Cold-Pressed Groundnut Oil (1 L)', price: 280, oldPrice: 350, cat: 'oils', tag: 'Cold-Pressed', emoji: '🫗', desc: 'Traditional wood-pressed groundnut oil — perfect for everyday South Indian cooking.', tags: ['best_seller', 'most_bought'], stock: 50 },
+    { id: 27, name: 'Virgin Coconut Oil (500 ml)', price: 299, oldPrice: null, cat: 'oils', tag: 'Organic', emoji: '🥥', desc: 'Unrefined virgin coconut oil for cooking, hair care, and skin moisturising.', tags: ['best_seller'], stock: 70 },
+    { id: 28, name: 'Sesame Oil (500 ml)', price: 220, oldPrice: null, cat: 'oils', tag: 'Traditional', emoji: '🫙', desc: 'Cold-pressed sesame (gingelly) oil, rich in antioxidants. Great for pickles and tempering.', tags: ['new'], stock: 35 },
+    { id: 29, name: 'Castor Oil (200 ml)', price: 180, oldPrice: 230, cat: 'oils', tag: 'Multi-Use', emoji: '🧴', desc: 'Pure cold-pressed castor oil for hair growth, skin care, and traditional remedies.', tags: [], stock: 45 },
   ],
 
   bundles: [
-    { id: 'b1', name: 'Weekly Vegetable Box', price: 499, oldPrice: 599, cat: 'bundle', tag: 'Bundle', emoji: '🥬', desc: 'Curated box of 5 kg seasonal organic vegetables — onions, tomatoes, potatoes, greens & more.', tags: ['best_seller'], stock: 30, items: ['Mixed Vegetables 5 kg'] },
-    { id: 'b2', name: 'Weekly Fruit Box', price: 549, oldPrice: 699, cat: 'bundle', tag: 'Bundle', emoji: '🍎', desc: 'Fresh seasonal fruit box — bananas, apples, oranges, and surprise seasonal picks. ~4 kg.', tags: ['new'], stock: 25, items: ['Mixed Fruits 4 kg'] },
-    { id: 'b3', name: 'Breakfast Essentials Pack', price: 399, oldPrice: 480, cat: 'bundle', tag: 'Bundle', emoji: '🍳', desc: 'Farm eggs (6 pc), fresh milk (1 L), artisan bread, organic honey 250 g.', tags: ['best_seller'], stock: 20, items: ['Eggs 6 pc', 'Milk 1 L', 'Bread', 'Honey 250 g'] },
-    { id: 'b4', name: 'Immunity Booster Kit', price: 999, oldPrice: 1247, cat: 'bundle', tag: 'Bundle', emoji: '🛡️', desc: 'Ashwagandha + Tulsi Tea + Moringa + Turmeric Golden Milk — complete immunity bundle.', tags: ['most_bought'], stock: 15, linkedProducts: [1, 5, 9, 2], items: ['Ashwagandha Powder', 'Tulsi Green Tea', 'Moringa Powder', 'Turmeric Golden Milk'] },
-    { id: 'b5', name: 'Skincare Starter Set', price: 699, oldPrice: 877, cat: 'bundle', tag: 'Bundle', emoji: '💆', desc: 'Neem Face Wash + Rose Water Toner + Aloe Vera Gel — start your natural skincare journey.', tags: ['new'], stock: 18, linkedProducts: [3, 8, 6], items: ['Neem Face Wash', 'Rose Water Toner', 'Aloe Vera Gel'] },
-    { id: 'b6', name: 'Hair Repair Bundle', price: 649, oldPrice: 798, cat: 'bundle', tag: 'Bundle', emoji: '💇', desc: 'Brahmi Hair Oil + Virgin Coconut Oil — restore shine and strength.', tags: [], stock: 22, linkedProducts: [4, 10], items: ['Brahmi Hair Oil', 'Coconut Oil'] },
+    { id: 'b1', name: 'Weekly Vegetable Box', price: 299, oldPrice: 399, cat: 'bundle', tag: 'Bundle', emoji: '🥬', desc: 'Curated box of 5 kg seasonal organic vegetables — onions, tomatoes, potatoes, greens & more.', tags: ['best_seller'], stock: 30, items: ['Mixed Vegetables 5 kg'] },
+    { id: 'b2', name: 'Weekly Fruit Box', price: 349, oldPrice: 449, cat: 'bundle', tag: 'Bundle', emoji: '🍎', desc: 'Fresh seasonal fruit box — bananas, mangoes, guavas, and seasonal picks. ~3 kg.', tags: ['new'], stock: 25, items: ['Mixed Fruits 3 kg'] },
+    { id: 'b3', name: 'Breakfast Essentials Pack', price: 299, oldPrice: 380, cat: 'bundle', tag: 'Bundle', emoji: '🍳', desc: 'Farm eggs (12 pc), fresh milk (1 L), organic curd (500g) — your morning sorted.', tags: ['best_seller'], stock: 20, linkedProducts: [21, 22, 25], items: ['Eggs 12 pc', 'Milk 1 L', 'Curd 500g'] },
+    { id: 'b4', name: 'Healthy Kitchen Starter', price: 599, oldPrice: 750, cat: 'bundle', tag: 'Bundle', emoji: '🏺', desc: 'Groundnut Oil + Brown Rice + Toor Dal — the foundation of a healthy kitchen.', tags: ['most_bought'], stock: 15, linkedProducts: [26, 14, 13], items: ['Groundnut Oil 1 L', 'Brown Rice 2 kg', 'Toor Dal 1 kg'] },
+    { id: 'b5', name: 'Natural Beauty Set', price: 599, oldPrice: 777, cat: 'bundle', tag: 'Bundle', emoji: '💆', desc: 'Neem Face Wash + Rose Water Toner + Aloe Vera Gel — your natural skincare starter.', tags: ['new'], stock: 18, linkedProducts: [1, 2, 3], items: ['Neem Face Wash', 'Rose Water Toner', 'Aloe Vera Gel'] },
+    { id: 'b6', name: 'Eco Home Pack', price: 699, oldPrice: 847, cat: 'bundle', tag: 'Bundle', emoji: '🌿', desc: 'Coconut Shell Bowl + Bamboo Cutlery + Clay Pot — sustainable living essentials.', tags: [], stock: 22, linkedProducts: [17, 18, 19], items: ['Coconut Shell Bowl', 'Bamboo Cutlery', 'Clay Water Pot'] },
   ],
 
   upsellRules: {
-    1: [7, 9, 2], 2: [5, 12, 1], 3: [8, 6, 11], 4: [10, 3, 6],
-    5: [12, 2, 1], 6: [3, 8, 11], 7: [1, 9, 5], 8: [3, 6, 11],
-    9: [1, 7, 2], 10: [4, 3, 6], 11: [8, 3, 6], 12: [5, 2, 1],
+    1: [2, 3, 4], 2: [1, 3, 4], 3: [1, 2, 4], 4: [1, 2, 3],
+    5: [6, 7, 8], 6: [5, 7, 8], 7: [5, 6, 8], 8: [5, 6, 7],
+    9: [10, 11, 12], 10: [9, 11, 12], 11: [9, 10, 12], 12: [9, 10, 11],
+    13: [14, 15, 16], 14: [13, 15, 16], 15: [13, 14, 16], 16: [13, 14, 15],
+    17: [18, 19, 20], 18: [17, 19, 20], 19: [17, 18, 20], 20: [17, 18, 19],
+    21: [22, 23, 24], 22: [21, 23, 25], 23: [22, 21, 24], 24: [22, 25, 23], 25: [22, 24, 21],
+    26: [27, 28, 29], 27: [26, 28, 29], 28: [26, 27, 29], 29: [26, 27, 28],
   },
 
   alsoBought: {
-    1: [5, 7, 9], 2: [5, 1, 12], 3: [6, 8, 4], 4: [10, 3, 8],
-    5: [1, 2, 12], 6: [3, 8, 11], 7: [1, 9, 5], 8: [3, 11, 6],
-    9: [1, 7, 2], 10: [4, 6, 3], 11: [3, 8, 6], 12: [5, 2, 1],
+    1: [2, 3, 27], 2: [1, 3, 4], 3: [1, 2, 27], 4: [1, 2, 3],
+    5: [9, 22, 21], 6: [5, 7, 8], 7: [5, 6, 8], 8: [5, 6, 7],
+    9: [10, 11, 26], 10: [9, 12, 26], 11: [9, 10, 13], 12: [9, 10, 11],
+    13: [14, 26, 9], 14: [13, 15, 16], 15: [13, 14, 22], 16: [13, 14, 15],
+    17: [18, 19, 20], 18: [17, 19, 20], 19: [17, 18, 20], 20: [17, 18, 19],
+    21: [22, 5, 9], 22: [21, 23, 25], 23: [22, 13, 26], 24: [22, 25, 21], 25: [22, 24, 21],
+    26: [13, 9, 27], 27: [26, 1, 29], 28: [26, 27, 29], 29: [27, 28, 1],
   },
 
   getCart() { try { return JSON.parse(localStorage.getItem(this.STORAGE_KEY)) || []; } catch { return []; } },
@@ -318,7 +350,7 @@ const Store = {
       const s = (b.name.toLowerCase().includes(q) ? 10 : 0) + (b.desc.toLowerCase().includes(q) ? 2 : 0);
       if (s > 0) results.push({ product: b, score: s, type: 'bundle' });
     });
-    ['Herbs|herbs|🌿', 'Skincare|skincare|🧴', 'Hair Care|haircare|🫧', 'Wellness|wellness|🍵', 'Bundles|bundle|📦'].forEach(c => {
+    ['Beauty|beauty|✨', 'Fruits|fruits|🍎', 'Vegetables|vegetables|🥬', 'Grains & Pulses|grains|🌾', 'Eco Utensils|ecoutensils|🎋', 'Dairy & Ghee|dairy|🥛', 'Oils|oils|🫗', 'Bundles|bundle|📦'].forEach(c => {
       const [name, cat, emoji] = c.split('|');
       if (name.toLowerCase().includes(q) || cat.includes(q)) results.push({ cat, name, emoji, score: 5, type: 'category' });
     });
@@ -332,32 +364,32 @@ const Store = {
 
 /* ============ RECIPES ============ */
 const Recipes = [
-  { id: 'r1', title: 'Golden Turmeric Latte', emoji: '☕', time: '5 min', servings: 1, desc: 'A warming anti-inflammatory drink that supports immunity and digestion.', ingredients: [{ productId: 2, name: 'Turmeric Golden Milk', qty: '1 tsp' }], steps: ['Heat 200 ml milk (dairy or plant-based).', 'Add 1 teaspoon Turmeric Golden Milk powder.', 'Whisk until frothy and well combined.', 'Sweeten with honey or jaggery to taste.', 'Serve warm — enjoy daily!'] },
-  { id: 'r2', title: 'Immunity Kadha', emoji: '🫖', time: '15 min', servings: 2, desc: 'Traditional Ayurvedic decoction to boost immunity — especially good during seasonal changes.', ingredients: [{ productId: 5, name: 'Tulsi Green Tea', qty: '1 bag' }, { productId: 1, name: 'Ashwagandha Powder', qty: '½ tsp' }, { productId: 9, name: 'Moringa Leaf Powder', qty: '½ tsp' }], steps: ['Boil 500 ml water with tulsi tea bag for 5 minutes.', 'Add ashwagandha and moringa powders.', 'Simmer on low for 8-10 minutes.', 'Strain, add honey and a squeeze of lemon.', 'Drink warm twice a day for best results.'] },
-  { id: 'r3', title: 'Neem-Aloe Face Mask', emoji: '🧖', time: '20 min', servings: 1, desc: 'A purifying face mask for acne-prone skin using natural ingredients.', ingredients: [{ productId: 3, name: 'Neem Face Wash', qty: '1 pump' }, { productId: 6, name: 'Aloe Vera Gel', qty: '1 tbsp' }], steps: ['Mix 1 pump of Neem Face Wash with 1 tablespoon Aloe Vera Gel.', 'Add a pinch of turmeric powder (optional).', 'Apply evenly to clean face avoiding eye area.', 'Leave on for 15 minutes.', 'Rinse with lukewarm water and pat dry.'] },
-  { id: 'r4', title: 'Overnight Hair Growth Serum', emoji: '💆', time: '5 min + overnight', servings: 1, desc: 'Nourishing oil blend for thicker, stronger hair with regular use.', ingredients: [{ productId: 4, name: 'Brahmi Hair Oil', qty: '2 tbsp' }, { productId: 10, name: 'Coconut Oil (Virgin)', qty: '1 tbsp' }], steps: ['Warm 2 tbsp Brahmi Hair Oil + 1 tbsp Coconut Oil gently.', 'Part hair into sections and apply to scalp.', 'Massage in circular motions for 5-10 minutes.', 'Leave overnight (use an old towel on your pillow).', 'Wash out in the morning with a mild shampoo.'] },
-  { id: 'r5', title: 'Chamomile Night Ritual', emoji: '🌙', time: '30 min', servings: 1, desc: 'Complete wind-down routine for better sleep — inside and out.', ingredients: [{ productId: 12, name: 'Chamomile Sleep Tea', qty: '1 bag' }, { productId: 11, name: 'Saffron Face Cream', qty: 'pea-sized' }, { productId: 8, name: 'Rose Water Toner', qty: '2 sprays' }], steps: ['Brew Chamomile Sleep Tea 30 min before bed.', 'Cleanse your face and spray Rose Water Toner.', 'Apply a pea-sized amount of Saffron Face Cream.', 'Sip tea slowly while reading or journaling.', 'Lights out — expect deep, restful sleep!'] },
-  { id: 'r6', title: 'Triphala Detox Smoothie', emoji: '🥤', time: '5 min', servings: 1, desc: 'A gut-cleansing smoothie packed with superfoods for daily detox.', ingredients: [{ productId: 7, name: 'Triphala Capsules', qty: '1 capsule (opened)' }, { productId: 9, name: 'Moringa Leaf Powder', qty: '½ tsp' }], steps: ['Open 1 Triphala capsule into a blender.', 'Add ½ tsp Moringa powder, 1 banana, handful of spinach.', 'Pour in 200 ml water or coconut water.', 'Blend until smooth.', 'Drink first thing in the morning on an empty stomach.'] },
+  { id: 'r1', title: 'Farm Fresh Banana Smoothie', emoji: '🍌', time: '5 min', servings: 1, desc: 'A quick, creamy smoothie with farm-fresh ingredients for a healthy breakfast.', ingredients: [{ productId: 5, name: 'Farm Fresh Bananas', qty: '2 pcs' }, { productId: 22, name: 'Fresh Cow Milk', qty: '200 ml' }], steps: ['Peel 2 bananas and break into chunks.', 'Add 200 ml fresh cow milk to a blender.', 'Add a teaspoon of honey (optional).', 'Blend until smooth and creamy.', 'Serve chilled — great post-workout!'] },
+  { id: 'r2', title: 'Neem-Aloe Face Mask', emoji: '🧖', time: '20 min', servings: 1, desc: 'A purifying face mask for clear, glowing skin using natural beauty products.', ingredients: [{ productId: 1, name: 'Neem Face Wash', qty: '1 pump' }, { productId: 3, name: 'Aloe Vera Gel', qty: '1 tbsp' }], steps: ['Mix 1 pump of Neem Face Wash with 1 tablespoon Aloe Vera Gel.', 'Add a pinch of turmeric powder (optional).', 'Apply evenly to clean face avoiding eye area.', 'Leave on for 15 minutes.', 'Rinse with lukewarm water and pat dry.'] },
+  { id: 'r3', title: 'Ragi Dosa', emoji: '🥞', time: '25 min', servings: 4, desc: 'Healthy millet dosa — high in calcium, great for kids and adults alike.', ingredients: [{ productId: 16, name: 'Ragi Flour', qty: '1 cup' }, { productId: 25, name: 'Organic Curd', qty: '2 tbsp' }], steps: ['Mix 1 cup ragi flour with water to make a thin batter.', 'Add 2 tbsp curd and salt to taste. Let it rest 10 min.', 'Heat a tawa and grease with a drop of oil.', 'Pour batter in a thin circle and cook both sides.', 'Serve hot with coconut chutney or sambar.'] },
+  { id: 'r4', title: 'Coconut Oil Hair Treatment', emoji: '💆', time: '5 min + overnight', servings: 1, desc: 'Deep conditioning oil treatment for stronger, shinier hair.', ingredients: [{ productId: 27, name: 'Virgin Coconut Oil', qty: '3 tbsp' }, { productId: 29, name: 'Castor Oil', qty: '1 tbsp' }], steps: ['Warm 3 tbsp coconut oil + 1 tbsp castor oil gently.', 'Part hair into sections and apply to scalp.', 'Massage in circular motions for 5-10 minutes.', 'Leave overnight (use an old towel on your pillow).', 'Wash out in the morning with a mild shampoo.'] },
+  { id: 'r5', title: 'Classic Dal Tadka', emoji: '🫘', time: '30 min', servings: 4, desc: 'Simple, comforting dal made with organic toor dal and cold-pressed oil.', ingredients: [{ productId: 13, name: 'Organic Toor Dal', qty: '1 cup' }, { productId: 9, name: 'Organic Tomatoes', qty: '2 pcs' }, { productId: 26, name: 'Cold-Pressed Groundnut Oil', qty: '2 tbsp' }, { productId: 12, name: 'Green Chillies', qty: '2 pcs' }], steps: ['Wash and pressure cook 1 cup toor dal with turmeric (3 whistles).', 'Heat 2 tbsp groundnut oil in a pan. Add cumin, mustard seeds.', 'Add chopped tomatoes, green chillies, and sauté until soft.', 'Pour cooked dal into the tadka. Add salt, mix well.', 'Garnish with fresh coriander. Serve with brown rice!'] },
+  { id: 'r6', title: 'Ghee-Roasted Mango Lassi', emoji: '🥭', time: '10 min', servings: 2, desc: 'A rich, aromatic mango lassi elevated with a touch of pure desi ghee.', ingredients: [{ productId: 6, name: 'Seasonal Mangoes', qty: '1 large' }, { productId: 25, name: 'Organic Curd', qty: '1 cup' }, { productId: 23, name: 'Pure Desi Ghee', qty: '1 tsp' }], steps: ['Peel and chop 1 ripe mango.', 'Blend mango with 1 cup curd and a pinch of cardamom.', 'Warm 1 tsp ghee in a small pan until fragrant.', 'Pour lassi into glasses and drizzle the warm ghee on top.', 'Serve chilled — a royal summer treat!'] },
 ];
 
 /* ============ HARVEST CALENDAR ============ */
 const HarvestCalendar = {
   months: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
   data: [
-    { name: 'Ashwagandha', emoji: '🌿', months: [0,1,2,10,11], peak: 'Nov-Feb', region: 'Madhya Pradesh, Rajasthan' },
-    { name: 'Turmeric', emoji: '🟡', months: [0,1,2], peak: 'Jan-Mar', region: 'Andhra Pradesh, Tamil Nadu' },
-    { name: 'Neem', emoji: '🌳', months: [2,3,4], peak: 'Mar-May', region: 'Pan-India' },
-    { name: 'Brahmi', emoji: '🍃', months: [5,6,7,8], peak: 'Jun-Sep', region: 'Kerala, Karnataka' },
-    { name: 'Tulsi', emoji: '🌱', months: [3,4,5,6,7,8,9], peak: 'Apr-Oct', region: 'Pan-India' },
-    { name: 'Aloe Vera', emoji: '🪴', months: [0,1,2,3,4,5,6,7,8,9,10,11], peak: 'Year-round', region: 'Rajasthan, Gujarat' },
-    { name: 'Moringa', emoji: '🌿', months: [2,3,4,5,6,7], peak: 'Mar-Aug', region: 'Tamil Nadu, Andhra Pradesh' },
-    { name: 'Saffron', emoji: '🌸', months: [9,10], peak: 'Oct-Nov', region: 'Kashmir' },
-    { name: 'Chamomile', emoji: '🌼', months: [2,3,4], peak: 'Mar-May', region: 'Himachal Pradesh, Uttarakhand' },
-    { name: 'Rose', emoji: '🌹', months: [1,2,3,4], peak: 'Feb-May', region: 'Rajasthan, Uttar Pradesh' },
-    { name: 'Coconut', emoji: '🥥', months: [0,1,2,3,4,5,6,7,8,9,10,11], peak: 'Year-round', region: 'Kerala, Karnataka, Tamil Nadu' },
-    { name: 'Alphonso Mango', emoji: '🥭', months: [3,4,5], peak: 'Apr-Jun', region: 'Maharashtra, Gujarat' },
-    { name: 'Guava', emoji: '🍏', months: [9,10,11,0,1], peak: 'Oct-Feb', region: 'Uttar Pradesh, Bihar' },
-    { name: 'Pomegranate', emoji: '🫐', months: [8,9,10,11,0,1], peak: 'Sep-Feb', region: 'Maharashtra, Karnataka' },
+    { name: 'Mango', emoji: '🥭', months: [3,4,5,6], peak: 'Apr-Jul', region: 'Telangana, Andhra Pradesh' },
+    { name: 'Banana', emoji: '🍌', months: [0,1,2,3,4,5,6,7,8,9,10,11], peak: 'Year-round', region: 'Telangana, Tamil Nadu' },
+    { name: 'Guava', emoji: '🍏', months: [9,10,11,0,1], peak: 'Oct-Feb', region: 'Telangana, Andhra Pradesh' },
+    { name: 'Pomegranate', emoji: '🫐', months: [8,9,10,11,0,1], peak: 'Sep-Feb', region: 'Maharashtra, Telangana' },
+    { name: 'Tomato', emoji: '🍅', months: [10,11,0,1,2,3], peak: 'Nov-Apr', region: 'Telangana, Andhra Pradesh' },
+    { name: 'Spinach', emoji: '🥬', months: [9,10,11,0,1,2], peak: 'Oct-Mar', region: 'Telangana, Karnataka' },
+    { name: 'Green Chillies', emoji: '🌶️', months: [0,1,2,3,4,5,6,7,8,9,10,11], peak: 'Year-round', region: 'Telangana, Andhra Pradesh' },
+    { name: 'Bitter Gourd', emoji: '🥒', months: [2,3,4,5,6,7], peak: 'Mar-Aug', region: 'Telangana, Karnataka' },
+    { name: 'Toor Dal', emoji: '🫘', months: [10,11,0], peak: 'Nov-Jan', region: 'Telangana, Maharashtra' },
+    { name: 'Ragi (Finger Millet)', emoji: '🌾', months: [9,10,11], peak: 'Oct-Dec', region: 'Telangana, Karnataka' },
+    { name: 'Brown Rice', emoji: '🍚', months: [10,11,0,1], peak: 'Nov-Feb', region: 'Telangana, Andhra Pradesh' },
+    { name: 'Groundnut', emoji: '🥜', months: [9,10,11], peak: 'Oct-Dec', region: 'Telangana, Andhra Pradesh' },
+    { name: 'Coconut', emoji: '🥥', months: [0,1,2,3,4,5,6,7,8,9,10,11], peak: 'Year-round', region: 'Andhra Pradesh, Karnataka' },
+    { name: 'Neem', emoji: '🌳', months: [2,3,4], peak: 'Mar-May', region: 'Telangana, Pan-India' },
   ],
   getCurrentSeason() {
     const m = new Date().getMonth();
@@ -592,7 +624,7 @@ function initProductDetail() {
   var id = /^\d+$/.test(rawId) ? parseInt(rawId, 10) : rawId;
   var p = Store.getProduct(id);
   if (!p) { container.innerHTML = '<p>Product not found.</p>'; return; }
-  document.title = p.name + ' \u2014 Prakriti Krishi';
+  document.title = p.name + ' \u2014 Prakriti Krishi Farms';
 
   // Track view
   Tracker.trackView(id);
@@ -796,7 +828,7 @@ function initCheckoutPage() {
     document.querySelector('.checkout-grid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0">' +
       '<p style="font-size:4rem;margin-bottom:16px">\uD83C\uDF89</p>' +
       '<h2 style="color:var(--green-900);margin-bottom:8px">Order Placed Successfully!</h2>' +
-      '<p style="color:var(--gray-500);margin-bottom:24px">Thank you for choosing Prakriti Krishi. Your order is being prepared with care.</p>' +
+      '<p style="color:var(--gray-500);margin-bottom:24px">Thank you for choosing Prakriti Krishi Farms. Your order is being prepared with care.</p>' +
       '<a href="account.html?tab=orders" class="btn btn-primary">Track Your Order</a> <a href="index.html" class="btn btn-outline" style="margin-left:8px">Back to Home</a></div>';
   });
 }
@@ -837,7 +869,7 @@ function initAccountPage() {
 }
 
 function renderLogin(page, nextUrl) {
-  page.innerHTML = '<div class="auth-box"><h2>Login to Prakriti Krishi</h2><p class="auth-sub">Welcome back! Enter your credentials.</p><div id="authErr" class="auth-err"></div><form id="loginForm"><div class="form-group"><label for="lEmail">Email</label><input type="email" id="lEmail" required></div><div class="form-group"><label for="lPass">Password</label><input type="password" id="lPass" required></div><button type="submit" class="btn btn-primary" style="width:100%">Login</button></form><p class="auth-switch">Don\'t have an account? <a href="account.html?m=register&next=' + encodeURIComponent(nextUrl) + '">Register</a></p></div>';
+  page.innerHTML = '<div class="auth-box"><h2>Login to Prakriti Krishi Farms</h2><p class="auth-sub">Welcome back! Enter your credentials.</p><div id="authErr" class="auth-err"></div><form id="loginForm"><div class="form-group"><label for="lEmail">Email</label><input type="email" id="lEmail" required></div><div class="form-group"><label for="lPass">Password</label><input type="password" id="lPass" required></div><button type="submit" class="btn btn-primary" style="width:100%">Login</button></form><p class="auth-switch">Don\'t have an account? <a href="account.html?m=register&next=' + encodeURIComponent(nextUrl) + '">Register</a></p></div>';
   document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var res = Auth.login(document.getElementById('lEmail').value, document.getElementById('lPass').value);
@@ -847,7 +879,7 @@ function renderLogin(page, nextUrl) {
 }
 
 function renderRegister(page, nextUrl) {
-  page.innerHTML = '<div class="auth-box" style="max-width:520px"><h2>Create Account</h2><p class="auth-sub">Join Prakriti Krishi for a natural shopping experience.</p><div id="authErr" class="auth-err"></div><form id="regForm"><div class="form-row"><div class="form-group"><label>Full Name *</label><input type="text" id="rName" required></div><div class="form-group"><label>Phone *</label><input type="tel" id="rPhone" required></div></div><div class="form-group"><label>Email *</label><input type="email" id="rEmail" required></div><div class="form-row"><div class="form-group"><label>Password *</label><input type="password" id="rPass" required minlength="6"></div><div class="form-group"><label>Confirm Password *</label><input type="password" id="rPass2" required></div></div><div class="form-group"><label>Referral Code (optional)</label><input type="text" id="rReferral" placeholder="e.g. PKAB12CD"></div><h4 style="margin:20px 0 10px;color:var(--green-900)">Shipping Address</h4><div class="form-group"><label>Address Line</label><input type="text" id="rAddr" placeholder="123 Green Lane"></div><div class="form-row"><div class="form-group"><label>City</label><input type="text" id="rCity"></div><div class="form-group"><label>PIN Code</label><input type="text" id="rPin"></div></div><div class="form-group"><label>State</label><select id="rState"><option value="">Select</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option><option>Andaman & Nicobar</option><option>Chandigarh</option><option>Delhi</option><option>Jammu & Kashmir</option><option>Ladakh</option><option>Lakshadweep</option><option>Puducherry</option></select></div><button type="submit" class="btn btn-primary" style="width:100%">Create Account</button></form><p class="auth-switch">Already have an account? <a href="account.html?m=login&next=' + encodeURIComponent(nextUrl) + '">Login</a></p></div>';
+  page.innerHTML = '<div class="auth-box" style="max-width:520px"><h2>Create Account</h2><p class="auth-sub">Join Prakriti Krishi Farms for a natural shopping experience.</p><div id="authErr" class="auth-err"></div><form id="regForm"><div class="form-row"><div class="form-group"><label>Full Name *</label><input type="text" id="rName" required></div><div class="form-group"><label>Phone *</label><input type="tel" id="rPhone" required></div></div><div class="form-group"><label>Email *</label><input type="email" id="rEmail" required></div><div class="form-row"><div class="form-group"><label>Password *</label><input type="password" id="rPass" required minlength="6"></div><div class="form-group"><label>Confirm Password *</label><input type="password" id="rPass2" required></div></div><div class="form-group"><label>Referral Code (optional)</label><input type="text" id="rReferral" placeholder="e.g. PKAB12CD"></div><h4 style="margin:20px 0 10px;color:var(--green-900)">Shipping Address</h4><div class="form-group"><label>Address Line</label><input type="text" id="rAddr" placeholder="123 Green Lane"></div><div class="form-row"><div class="form-group"><label>City</label><input type="text" id="rCity"></div><div class="form-group"><label>PIN Code</label><input type="text" id="rPin"></div></div><div class="form-group"><label>State</label><select id="rState"><option value="">Select</option><option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option><option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option><option>Mizoram</option><option>Nagaland</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Sikkim</option><option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option><option>Andaman & Nicobar</option><option>Chandigarh</option><option>Delhi</option><option>Jammu & Kashmir</option><option>Ladakh</option><option>Lakshadweep</option><option>Puducherry</option></select></div><button type="submit" class="btn btn-primary" style="width:100%">Create Account</button></form><p class="auth-switch">Already have an account? <a href="account.html?m=login&next=' + encodeURIComponent(nextUrl) + '">Login</a></p></div>';
   document.getElementById('regForm').addEventListener('submit', function(e) {
     e.preventDefault();
     var pw = document.getElementById('rPass').value;

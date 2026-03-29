@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prakriti Krishi — Farm Fresh & Natural Wellness</title>
+  <title>Prakriti Krishi Farms — Farm Fresh & Natural Wellness</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
   <!-- Header -->
   <header class="header">
     <div class="container">
-      <a href="index.html" class="logo">🌿 Prakriti <span>Krishi</span></a>
+      <a href="index.html" class="logo"><img src="images/logo.png" alt="Prakriti Krishi Farms" class="logo-img"> Prakriti <span>Krishi Farms</span></a>
       <button class="mobile-toggle" aria-label="Menu">☰</button>
       <nav class="nav">
         <a href="index.html" class="active">Home</a>
@@ -57,7 +57,7 @@
         <div class="feature-item">
           <div class="icon">🚚</div>
           <h4>Free Delivery</h4>
-          <p>On all orders over ₹599</p>
+          <p>Within 25 km of our Gachibowli store</p>
         </div>
       </div>
     </div>
@@ -67,23 +67,35 @@
   <section class="categories">
     <div class="container">
       <h2 class="section-title">Shop by Category</h2>
-      <p class="section-subtitle">Explore our curated collection of natural and Ayurvedic products</p>
+      <p class="section-subtitle">Explore our farm-fresh and natural product range</p>
       <div class="cat-grid">
-        <a href="category.html?cat=herbs" class="cat-card">
-          <div class="cat-img">🌿</div>
-          <div class="cat-info"><h3>Herbs & Supplements</h3><p>Ayurvedic powders & capsules</p></div>
+        <a href="category.html?cat=beauty" class="cat-card">
+          <div class="cat-img">✨</div>
+          <div class="cat-info"><h3>Beauty</h3><p>Natural face & body care</p></div>
         </a>
-        <a href="category.html?cat=skincare" class="cat-card">
-          <div class="cat-img">🧴</div>
-          <div class="cat-info"><h3>Skincare</h3><p>Natural face & body care</p></div>
+        <a href="category.html?cat=fruits" class="cat-card">
+          <div class="cat-img">🍎</div>
+          <div class="cat-info"><h3>Fruits</h3><p>Seasonal & daily fresh fruits</p></div>
         </a>
-        <a href="category.html?cat=haircare" class="cat-card">
-          <div class="cat-img">🫧</div>
-          <div class="cat-info"><h3>Hair Care</h3><p>Oils, shampoos & treatments</p></div>
+        <a href="category.html?cat=vegetables" class="cat-card">
+          <div class="cat-img">🥬</div>
+          <div class="cat-info"><h3>Vegetables</h3><p>Farm-fresh organic veggies</p></div>
         </a>
-        <a href="category.html?cat=wellness" class="cat-card">
-          <div class="cat-img">🍵</div>
-          <div class="cat-info"><h3>Wellness Teas</h3><p>Herbal teas & golden milk</p></div>
+        <a href="category.html?cat=grains" class="cat-card">
+          <div class="cat-img">🌾</div>
+          <div class="cat-info"><h3>Grains & Pulses</h3><p>Organic dals, rice & millets</p></div>
+        </a>
+        <a href="category.html?cat=ecoutensils" class="cat-card">
+          <div class="cat-img">🎋</div>
+          <div class="cat-info"><h3>Eco Utensils</h3><p>Sustainable home essentials</p></div>
+        </a>
+        <a href="category.html?cat=dairy" class="cat-card">
+          <div class="cat-img">🥛</div>
+          <div class="cat-info"><h3>Dairy & Ghee</h3><p>Milk, eggs, ghee & paneer</p></div>
+        </a>
+        <a href="category.html?cat=oils" class="cat-card">
+          <div class="cat-img">🫗</div>
+          <div class="cat-info"><h3>Oils</h3><p>Cold-pressed & traditional oils</p></div>
         </a>
       </div>
     </div>
@@ -128,7 +140,7 @@
   <!-- Newsletter -->
   <section class="newsletter">
     <div class="container">
-      <h2>Join the Prakriti Krishi Family</h2>
+      <h2>Join the Prakriti Krishi Farms Family</h2>
       <p>Get 15% off your first order + wellness tips in your inbox</p>
       <form onsubmit="event.preventDefault(); showToast('Thanks for subscribing!'); this.reset();">
         <input type="email" placeholder="Your email address" required>
@@ -142,16 +154,13 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h4>🌿 Prakriti Krishi</h4>
+          <h4>🌿 Prakriti Krishi Farms</h4>
           <p>Bringing the ancient wisdom of Ayurveda and farm-fresh goodness to modern life. Every product is sourced with respect for nature and your well-being.</p>
         </div>
         <div>
           <h4>Shop</h4>
           <ul>
-            <li><a href="category.html?cat=herbs">Herbs</a></li>
-            <li><a href="category.html?cat=skincare">Skincare</a></li>
-            <li><a href="category.html?cat=haircare">Hair Care</a></li>
-            <li><a href="category.html?cat=wellness">Wellness</a></li>
+            <li><a href="category.html?cat=beauty">Beauty</a></li><li><a href="category.html?cat=fruits">Fruits</a></li><li><a href="category.html?cat=vegetables">Vegetables</a></li><li><a href="category.html?cat=grains">Grains & Pulses</a></li><li><a href="category.html?cat=dairy">Dairy & Ghee</a></li><li><a href="category.html?cat=oils">Oils</a></li>
             <li><a href="subscriptions.html">Subscriptions</a></li>
           </ul>
         </div>
@@ -170,13 +179,13 @@
             <li><a href="recipes.html">Recipes</a></li>
             <li><a href="harvest.html">Harvest Calendar</a></li>
             <li><a href="account.html">My Account</a></li>
-            <li><a href="account.html?tab=orders">Orders</a></li>
+            <li><a href="stores.html">Our Stores</a></li><li><a href="account.html?tab=orders">Orders</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <a href="https://www.instagram.com/prakritikrishi_farms?utm_source=qr&igsh=b2YwcmVlZjlzZHM5" target="_blank" rel="noopener noreferrer" class="footer-ig"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> @prakritikrishi_farms</a><br>
-        &copy; 2026 Prakriti Krishi. All rights reserved. Made with 💚 and nature.
+        &copy; 2026 Prakriti Krishi Farms. All rights reserved. Made with 💚 and nature.
       </div>
     </div>
   </footer>
