@@ -1,0 +1,60 @@
+openapi: 3.0.3
+info:
+  title: Prakriti API
+  version: 1.0.0
+  description: REST API for the Prakriti natural wellness e-commerce store.
+paths:
+  /api/products:
+    get:
+      summary: List all products
+      parameters:
+        - name: category
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Array of products
+  /api/products/{id}:
+    get:
+      summary: Get product by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Product object
+  /api/cart:
+    get:
+      summary: Get current cart
+      responses:
+        '200':
+          description: Cart with items
+    post:
+      summary: Add item to cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId: { type: integer }
+                qty: { type: integer }
+      responses:
+        '200':
+          description: Updated cart
+  /api/orders:
+    post:
+      summary: Place an order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shipping: { type: object }
+                payment: { type: object }
+      responses:
+        '201':
+          description: Order confirmation

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews & FAQ — Prakriti Krishi</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">🌿 Prakriti <span>Krishi</span></a>
+      <button class="mobile-toggle" aria-label="Menu">☰</button>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="category.html">Shop</a>
+        <a href="subscriptions.html">Subscriptions</a>
+        <a href="recipes.html">Recipes</a>
+        <a href="cart.html" class="cart-icon">🛒 <span class="cart-count" style="display:none">0</span></a>
+        <a href="account.html" class="nav-account">Login</a>
+      </nav>
+    </div>
+  </header>
+  <div class="addr-bar-wrap"><div class="container" style="position:relative"><div id="addressBar"></div></div></div>
+
+  <div class="breadcrumb container"><a href="index.html">Home</a><span>›</span> Reviews & FAQ</div>
+
+  <!-- Review Highlights -->
+  <section style="padding:48px 0">
+    <div class="container">
+      <h2 class="section-title">What Customers Are Saying</h2>
+      <p class="section-subtitle">Real reviews from the Prakriti Krishi family</p>
+
+      <div class="reviews-summary">
+        <div class="rating-big">
+          <span class="rating-num">4.8</span>
+          <div>
+            <div class="stars-big">★★★★★</div>
+            <p class="rating-count">Based on <strong id="totalCount">0</strong> reviews</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview cards (first 4) -->
+      <div class="review-grid" id="reviewPreview"></div>
+
+      <!-- Expand toggle -->
+      <div style="text-align:center;margin:24px 0">
+        <button class="btn btn-outline" id="toggleAllReviews">Show All Reviews ▾</button>
+      </div>
+
+      <!-- All reviews (hidden initially) -->
+      <div class="review-grid" id="reviewAll" style="display:none"></div>
+    </div>
+  </section>
+
+  <!-- Write a Review -->
+  <section style="padding:48px 0;background:var(--gray-100)">
+    <div class="container">
+      <h2 class="section-title">Write a Review</h2>
+      <div class="auth-box" style="max-width:560px">
+        <form id="reviewForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="revName">Your Name</label>
+              <input type="text" id="revName" required placeholder="Priya S.">
+            </div>
+            <div class="form-group">
+              <label for="revProduct">Product</label>
+              <select id="revProduct" required>
+                <option value="">Select a product</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Rating</label>
+            <div class="star-picker" id="starPicker">
+              <span data-v="1">☆</span><span data-v="2">☆</span><span data-v="3">☆</span><span data-v="4">☆</span><span data-v="5">☆</span>
+            </div>
+            <input type="hidden" id="revRating" value="5">
+          </div>
+          <div class="form-group">
+            <label for="revText">Your Review</label>
+            <textarea id="revText" rows="4" required placeholder="Tell us about your experience..." style="width:100%;padding:12px 16px;border:2px solid var(--gray-200);border-radius:var(--radius);resize:vertical"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Submit Review</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section style="padding:60px 0">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Are your products really 100% organic? <span class="faq-arrow">▾</span></button>
+          <div class="faq-a"><p>Yes! All our products carry certifications from India Organic, USDA Organic, or Jaivik Bharat. Every batch is lab-tested by NABL-accredited laboratories for purity and pesticide-free compliance before listing.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">How does the subscription/recurring delivery work? <span class="faq-arrow">▾</span></button>
+          <div class="faq-a"><p>Visit our <a href="subscriptions.html">Subscriptions page</a> to choose daily essentials like milk, eggs, butter, or seasonal fruits. Pick your delivery frequency (daily, alternate days, weekly, or custom days) and quantity. You can pause or modify anytime from your account dashboard.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What is your shipping policy? <span class="faq-arrow">▾</span></button>
+          <div class="faq-a"><p>We offer free shipping on all orders above ₹599. Orders below that have a flat ₹49 delivery charge. Most orders are delivered within 2–5 business days. Read more on our <a href="shipping.html">Shipping page</a>.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I return or exchange a product? <span class="faq-arrow">▾</span></button>
+          <div class="faq-a"><p>We accept returns within 7 days of delivery for unopened products. Perishable items (milk, eggs, paneer, etc.) cannot be returned but we'll replace them if damaged on arrival. Contact us with your order ID for assistance.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Where do you source your products from? <span class="faq-arrow">▾</span></button>
+          <div class="faq-a"><p>We work directly with 200+ small-scale organic farmers across Maharashtra, Karnataka, Kerala, Rajasthan, and more. Learn about our farm-to-store journey on our <a href="about.html">About page</a>.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I need an account to shop? <span class="faq-arrow">▾</span></button>
+          <div class="faq-a"><p>Yes, creating an account allows us to save your delivery addresses, manage subscriptions, and keep your order history. It only takes a minute — <a href="account.html?m=register">create one here</a>.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">How do I change my delivery address? <span class="faq-arrow">▾</span></button>
+          <div class="faq-a"><p>You can save multiple addresses from <a href="account.html?tab=addresses">Account → Addresses</a>. Switch your active delivery address anytime using the address bar at the top of the site.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What payment methods do you accept? <span class="faq-arrow">▾</span></button>
+          <div class="faq-a"><p>We accept all major credit/debit cards, UPI, net banking, and popular wallets. Cash on delivery is available in select metro cities.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><h4>🌿 Prakriti Krishi</h4><p>Bringing the ancient wisdom of Ayurveda and farm-fresh goodness to modern life.</p></div>
+        <div><h4>Shop</h4><ul><li><a href="category.html?cat=herbs">Herbs</a></li><li><a href="category.html?cat=skincare">Skincare</a></li><li><a href="category.html?cat=haircare">Hair Care</a></li><li><a href="category.html?cat=wellness">Wellness</a></li></ul></div>
+        <div><h4>Help</h4><ul><li><a href="about.html">About Us</a></li><li><a href="reviews.html">FAQ & Reviews</a></li><li><a href="shipping.html">Shipping</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div><h4>Account</h4><ul><li><a href="account.html">My Account</a></li><li><a href="account.html?tab=orders">Orders</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">&copy; 2026 Prakriti Krishi. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    const REVIEW_KEY = 'pk_reviews';
+    const defaultReviews = [
+      { name: 'Priya S.', product: 'Ashwagandha Powder', rating: 5, text: 'The Ashwagandha powder has completely transformed my sleep routine. I feel so much calmer and rested. Will definitely reorder!', date: '2026-03-15' },
+      { name: 'Rahul M.', product: 'Neem Face Wash', rating: 5, text: 'Love the Neem Face Wash! My skin has never been clearer. Finally a natural product that actually works without harsh chemicals.', date: '2026-03-12' },
+      { name: 'Ananya K.', product: 'Fresh Cow Milk (Subscription)', rating: 5, text: 'The daily milk subscription is a lifesaver. Fresh A2 milk at my door every morning — can\'t beat that! Quality is consistently excellent.', date: '2026-03-08' },
+      { name: 'Vikram J.', product: 'Tulsi Green Tea', rating: 4, text: 'Great flavour and very soothing. I drink it every evening. Packaging is lovely and eco-friendly too. Slight delay in delivery though.', date: '2026-03-05' },
+      { name: 'Meera D.', product: 'Brahmi Hair Oil', rating: 5, text: 'My hair has noticeably less fall after 3 weeks of use. The oil smells wonderful and doesn\'t feel greasy. Highly recommend!', date: '2026-02-28' },
+      { name: 'Arjun P.', product: 'Seasonal Alphonso Mangoes', rating: 5, text: 'Best mangoes I\'ve had in years! Perfectly ripe, sweet, and clearly straight from the farm. The seasonal subscription is genius.', date: '2026-02-20' },
+      { name: 'Sneha R.', product: 'Saffron Face Cream', rating: 4, text: 'The cream feels luxurious and my skin has a nice glow. A little pricey but you can feel the quality. Would love a smaller trial size.', date: '2026-02-15' },
+      { name: 'Karthik N.', product: 'Triphala Capsules', rating: 5, text: 'Been using for a month now and my digestion has improved significantly. No side effects at all. True Ayurvedic quality.', date: '2026-02-10' },
+      { name: 'Divya L.', product: 'Farm Fresh Eggs (Subscription)', rating: 5, text: 'The eggs are noticeably different — bright orange yolks, thick shells. My kids love them! Never going back to store-bought.', date: '2026-02-05' },
+      { name: 'Rohan G.', product: 'Moringa Leaf Powder', rating: 4, text: 'Good quality powder. I mix it into my morning smoothie. Packaging could be improved for easier pouring but the product itself is great.', date: '2026-01-28' },
+    ];
+
+    function getReviews() {
+      try { const r = JSON.parse(localStorage.getItem(REVIEW_KEY)); return r && r.length ? r : defaultReviews; }
+      catch { return defaultReviews; }
+    }
+    function saveReviews(r) { localStorage.setItem(REVIEW_KEY, JSON.stringify(r)); }
+
+    function reviewCard(r) {
+      return `<div class="review-card">
+        <div class="stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+        <p class="review-text">"${r.text}"</p>
+        <div class="review-meta"><strong>${r.name}</strong> · ${r.product} · ${r.date}</div>
+      </div>`;
+    }
+
+    function renderReviews() {
+      const reviews = getReviews();
+      document.getElementById('totalCount').textContent = reviews.length;
+      document.getElementById('reviewPreview').innerHTML = reviews.slice(0, 4).map(reviewCard).join('');
+      document.getElementById('reviewAll').innerHTML = reviews.slice(4).map(reviewCard).join('');
+    }
+
+    renderReviews();
+
+    // Toggle
+    const toggleBtn = document.getElementById('toggleAllReviews');
+    const allDiv = document.getElementById('reviewAll');
+    toggleBtn.addEventListener('click', () => {
+      const open = allDiv.style.display !== 'none';
+      allDiv.style.display = open ? 'none' : '';
+      toggleBtn.textContent = open ? 'Show All Reviews ▾' : 'Hide Reviews ▴';
+    });
+
+    // Star picker
+    const picker = document.getElementById('starPicker');
+    const ratingInput = document.getElementById('revRating');
+    let currentRating = 5;
+    picker.querySelectorAll('span').forEach(s => {
+      s.style.cursor = 'pointer'; s.style.fontSize = '1.5rem'; s.style.color = 'var(--sand-300)';
+      s.addEventListener('click', () => {
+        currentRating = parseInt(s.dataset.v);
+        ratingInput.value = currentRating;
+        picker.querySelectorAll('span').forEach((x, i) => x.textContent = i < currentRating ? '★' : '☆');
+      });
+    });
+    // Init stars to 5
+    picker.querySelectorAll('span').forEach((x, i) => x.textContent = i < 5 ? '★' : '☆');
+
+    // Product dropdown
+    const prodSelect = document.getElementById('revProduct');
+    Store.products.forEach(p => { const o = document.createElement('option'); o.value = p.name; o.textContent = p.name; prodSelect.appendChild(o); });
+    ['Fresh Cow Milk (Subscription)', 'Farm Fresh Eggs (Subscription)', 'Seasonal Alphonso Mangoes'].forEach(n => {
+      const o = document.createElement('option'); o.value = n; o.textContent = n; prodSelect.appendChild(o);
+    });
+
+    // Auto-fill name if logged in
+    const user = Auth.currentUser();
+    if (user) document.getElementById('revName').value = user.name;
+
+    // Submit
+    document.getElementById('reviewForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const reviews = getReviews();
+      reviews.unshift({
+        name: document.getElementById('revName').value,
+        product: prodSelect.value,
+        rating: currentRating,
+        text: document.getElementById('revText').value,
+        date: new Date().toISOString().slice(0, 10)
+      });
+      saveReviews(reviews);
+      renderReviews();
+      document.getElementById('reviewForm').reset();
+      picker.querySelectorAll('span').forEach((x, i) => x.textContent = i < 5 ? '★' : '☆');
+      currentRating = 5; ratingInput.value = 5;
+      showToast('Review submitted! Thank you 🙏');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
