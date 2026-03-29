@@ -1179,10 +1179,6 @@ document.addEventListener('DOMContentLoaded', function() {
     else { el.textContent = 'Login'; el.href = 'account.html?m=login'; }
   });
 
-  // Home page featured products
-  var featured = document.getElementById('featuredProducts');
-  if (featured) renderProductCards(featured, Store.products.slice(0, 8));
-
   // Category page all products
   var catProducts = document.getElementById('categoryProducts');
   if (catProducts) {
